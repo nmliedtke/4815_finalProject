@@ -15,7 +15,7 @@ class ArmController():
 		self.host = host
 		self.port = port
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.sock.settimeout(20)
+		self.sock.settimeout(10000)
 
 		#fcntl.fcntl(self.sock, fcntl.F_SETFL, os.O_NONBLOCK)
 

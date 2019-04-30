@@ -30,7 +30,7 @@ def send_move(move, arm):
 	if(abs(move1-move2) >= 14):
 		val = (move2-move1)/2
 		pickup = move1+val
-		time.sleep(5)
+		stop = input("tell when to go")
 		arm.move_j([pickup,0,1])
 		arm.move_j([pickup,1,0])
 
@@ -41,7 +41,7 @@ def send_move(move, arm):
 
 
 game = Game.Game()
-arm = ArmController('127.0.0.1',3000) #'130.215.217.14',3000) #192.168.100.100
+arm = ArmController('192.168.125.1',3000) #'130.215.217.14',3000) #192.168.100.100
 arm.connect()
 game.consecutive_noncapture_move_limit = 50
 #arm.move_j([8,0,1])
@@ -54,16 +54,17 @@ while True:
 			break
 		print("\nYour possible moves: ")
 		move_num = input( game.get_possible_moves() )
-		print(game.get_possible_moves()[int(move_num)])
+		print(game.get_possible_moves()[int(move_num[:1])])
 		move = game.get_possible_moves()[int(move_num)]
 		game.move(game.get_possible_moves()[int(move_num)])
 		send_move(move,arm)
-		stop = input("tell when to go")
+
 
 	
 	if game.whose_turn() == 2:
 		if game.is_over():
 			break
+		stop = input("tell when to go")
 		new_moves = game.get_possible_moves()
 		index = random.randint(0,len(new_moves)-1)
 		game.move(new_moves[index])
